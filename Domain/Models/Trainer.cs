@@ -1,6 +1,7 @@
 ﻿namespace FatDairy.Domain.Models
 {
-    public class Trainer
+    public class Trainer : IEntity
     {
+        public int Id { get; set; }
     }
 }

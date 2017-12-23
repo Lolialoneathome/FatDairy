@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace FatDairy.Domain.Models
 {
-    public class Fatty
+    public class Fatty : IEntity
     {
         
         protected readonly List<WeightChangeLogItem> _changeLog;
-        public readonly bool HideAge;
-        public readonly bool HideEmail;
+
         protected internal Fatty(UserInfo userInfo,
+            bool hideFoodTrack,
             bool hideAge,
             bool hideEmail,
             double currentWeigth,
@@ -19,6 +19,7 @@ namespace FatDairy.Domain.Models
             Trainer trainer = null,
             IEnumerable<WeightChangeLogItem> changeLog = null)
         {
+            HideFoodTrack = hideFoodTrack;
             HideAge = hideAge;
             HideEmail = hideEmail;
             Trainer = trainer;
@@ -29,6 +30,9 @@ namespace FatDairy.Domain.Models
         }
 
         public int Id { get; set; }
+        public bool HideAge { get; protected set; }
+        public bool HideEmail { get; protected set; }
+        public bool HideFoodTrack { get; protected set; }
         protected UserInfo _userInfo;
         public string Name => _userInfo.Name;
         public string Surname => _userInfo.Surname;

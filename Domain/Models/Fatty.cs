@@ -33,11 +33,8 @@ namespace FatDairy.Domain.Models
         public bool HideAge { get; protected set; }
         public bool HideEmail { get; protected set; }
         public bool HideFoodTrack { get; protected set; }
-        protected UserInfo _userInfo;
-        public string Name => _userInfo.Name;
-        public string Surname => _userInfo.Surname;
-        public int Age => _userInfo.Age;
-        public string Email => _userInfo.Email;
+        public UserInfo UserInfo { get; protected set; }
+
         public Trainer Trainer { get; protected set; }
         public double CurrentWeigth { get; protected set; }
         public double DesiredWeigth { get; protected set; }
@@ -46,7 +43,7 @@ namespace FatDairy.Domain.Models
 
         public void ChangeUserInfo(UserInfo userInfo)
         {
-            _userInfo = userInfo;
+            UserInfo = userInfo;
         }
 
         public void ChangeCurrentWeight(int newWeight, DateTime? date)

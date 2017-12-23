@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using FatDairy.Domain;
 using FatDairy.Domain.Models;
+using FatDairy.Domain.Repos;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;

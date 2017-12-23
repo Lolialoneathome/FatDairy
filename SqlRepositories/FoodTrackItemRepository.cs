@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using FatDairy.Domain;
 using FatDairy.Domain.Models;
 using FatDairy.Domain.Repos;
 using System;
@@ -7,15 +6,14 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Threading.Tasks;
 
-namespace FatDairy.Sql
+namespace SqlRepositories
 {
-    public class FoodTrackItemRepository : IFoodTrackItemRepository
+    public class FoodTrackItemRepository : BaseSqlRepository, IFoodTrackItemRepository
     {
-        protected readonly DbConnection _connection;
-        public FoodTrackItemRepository(DbConnection connection)
+        public FoodTrackItemRepository(DbConnection connection) : base(connection)
         {
-            _connection = connection ?? throw new ArgumentNullException(nameof(connection));
         }
+
         public async Task AddAsync(int fattyId, FoodTrackItem item)
         {
             var spName = "public.add_food_track_item";
@@ -25,7 +23,7 @@ namespace FatDairy.Sql
                         fatty_id = fattyId,
                         images = item.Images,
                         text = item.Text,
-                        date = item.date
+                        item.date
                     }
                 );
 

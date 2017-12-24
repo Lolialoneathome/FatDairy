@@ -9,9 +9,9 @@
   hidefoodtrach boolean default false,
   hideage boolean default false,
   hideemail boolean default false,
-  currentweight decimal NOT NULL,
-  desiredweight decimal NOT NULL,
-  heigth decimal NOT NULL,
+  currentweight double precision,
+  desiredweight double precision,
+  heigth double precision NOT NULL,
   trainer_id integer,
   CONSTRAINT fatty_id_pk PRIMARY KEY (id),
   CONSTRAINT constraint_email UNIQUE (email)

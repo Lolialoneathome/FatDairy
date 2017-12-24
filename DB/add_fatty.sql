@@ -8,12 +8,13 @@
   hidefoodtrach boolean,
   hideage boolean,
   hideemail boolean,
-  currentweight decimal,
-  desiredweight decimal,
-  heigth decimal,
+  currentweight double precision,
+  desiredweight double precision,
+  heigth double precision,
   trainer_id integer
 ) 
 RETURNS INTEGER AS $$
+DECLARE res_id integer;
 BEGIN
   INSERT INTO public.fattyes(
     name,
@@ -42,7 +43,9 @@ BEGIN
     currentweight,
     desiredweight,
     heigth,
-    trainer_id) RETURNING id;
+    trainer_id) RETURNING id INTO res_id;
+
+  RETURN res_id;
 	
 END;
 $$ LANGUAGE plpgsql;

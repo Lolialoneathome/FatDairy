@@ -13,14 +13,15 @@ RETURNS TABLE
   hidefoodtrach boolean,
   hideage boolean,
   hideemail boolean,
-  currentweight decimal,
-  desiredweight decimal,
-  heigth decimal,
+  currentweight double precision,
+  desiredweight double precision,
+  heigth double precision,
   trainer_id integer
 )
  AS $$
 BEGIN
-  RETURN QUERY SELECT(
+  RETURN QUERY SELECT
+    f.id,
     f.name,
     f.surname,
     f.password,
@@ -33,7 +34,7 @@ BEGIN
     f.currentweight,
     f.desiredweight,
     f.heigth,
-    f.trainer_id)
+    f.trainer_id
   FROM public.fattyes f
   WHERE f.email = mail;
 END;

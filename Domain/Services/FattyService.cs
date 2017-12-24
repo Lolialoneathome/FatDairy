@@ -9,6 +9,10 @@ namespace FatDairy.Domain.Services
     {
         protected readonly IFattyRepository _fattyRepository;
 
+        public FattyService(IFattyRepository fattyRepository)
+        {
+            _fattyRepository = fattyRepository ?? throw new ArgumentNullException(nameof(fattyRepository));
+        }
         public async Task<Fatty> AddFattyAsync(UserInfo userInfo,
             bool hideFoodTrack,
             bool hideAge,
@@ -18,7 +22,7 @@ namespace FatDairy.Domain.Services
             double height,
             int? trainerId = null)
         {
-            var maybeExistFatty = _fattyRepository.GetByEmail(userInfo.Email);
+            var maybeExistFatty = await _fattyRepository.GetByEmail(userInfo.Email);
             if (maybeExistFatty != null)
                 throw new InvalidOperationException("Fatty with this email already exist");
 

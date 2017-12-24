@@ -1,6 +1,8 @@
 ﻿using Dapper;
 using FatDairy.Domain.Models;
 using FatDairy.Domain.Repos;
+using System;
+using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,7 +35,8 @@ namespace SqlRepositories
                         desiredweight = fatty.DesiredWeigth,
                         heigth = fatty.Heigth,
                         trainer_id = 0 
-                    }
+                    },
+                    commandType: CommandType.StoredProcedure
                 );
 
             fatty.Id = query.Single();
@@ -42,27 +45,56 @@ namespace SqlRepositories
         public async Task<Fatty> GetByEmail(string email)
         {
             var spName = "public.get_fatty_by_mail";
-            var query = await _connection.QueryAsync<Fatty>(
+            var query = await _connection.QueryAsync<FattyDataFromDbDTO>(
                     spName,
                     new
                     {
                         mail = email
-                    }
+                    },
+                    commandType: CommandType.StoredProcedure
                 );
-            return query.SingleOrDefault();
+            var dto = query.SingleOrDefault();
+            if (dto == null) return null;
+            var userInfo = new UserInfo(dto.name, dto.surname, dto.password, dto.email, dto.birthday, (Sex)dto.sex);
+            var fatty = new Fatty(userInfo, dto.hidefoodtrach, dto.hideage, dto.hideemail, dto.currentweight, dto.desiredweight, dto.heigth, null);
+            return fatty;
         }
 
         public async Task<Fatty> GetById(int id)
         {
             var spName = "public.get_fatty_by_id";
-            var query = await _connection.QueryAsync<Fatty>(
+            var query = await _connection.QueryAsync<FattyDataFromDbDTO>(
                     spName,
                     new
                     {
                         fatty_id = id
-                    }
+                    },
+                    commandType: CommandType.StoredProcedure
                 );
-            return query.SingleOrDefault();
+            var dto = query.SingleOrDefault();
+            if (dto == null) return null;
+            var userInfo = new UserInfo(dto.name, dto.surname, dto.password, dto.email, dto.birthday, (Sex)dto.sex);
+            var fatty = new Fatty(userInfo, dto.hidefoodtrach, dto.hideage, dto.hideemail, dto.currentweight, dto.desiredweight, dto.heigth, null);
+            return fatty;
+        }
+
+
+        protected class FattyDataFromDbDTO
+        {
+            public int id;
+            public string name;
+            public string surname;
+            public string password;
+            public string email;
+            public DateTime birthday;
+            public short sex;
+            public bool hidefoodtrach;
+            public bool hideage;
+            public bool hideemail;
+            public double currentweight;
+            public double desiredweight;
+            public double heigth;
+            public int trainer_id;
         }
     }
 }

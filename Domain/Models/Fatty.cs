@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("SqlRepositories")]
 namespace FatDairy.Domain.Models
 {
     public class Fatty : IEntity
@@ -19,11 +21,12 @@ namespace FatDairy.Domain.Models
             Trainer trainer = null,
             IEnumerable<WeightChangeLogItem> changeLog = null)
         {
+            UserInfo = userInfo;
             HideFoodTrack = hideFoodTrack;
             HideAge = hideAge;
             HideEmail = hideEmail;
             Trainer = trainer;
-            _changeLog = changeLog.ToList() ?? new List<WeightChangeLogItem>();
+            _changeLog = changeLog?.ToList() ?? new List<WeightChangeLogItem>();
             CurrentWeigth = currentWeigth > 0 ? currentWeigth : throw new InvalidOperationException("Current weight cannot be below zero");
             DesiredWeigth = desiredWeigth > 0 ? desiredWeigth : throw new InvalidOperationException("Desired weight cannot be below zero");
             Heigth = height > 0 ? height : throw new InvalidOperationException("Height cannot be below zero");

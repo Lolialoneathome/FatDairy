@@ -3,6 +3,7 @@ using FatDairy.Domain.Models;
 using FatDairy.Domain.Repos;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Threading.Tasks;
 
@@ -24,7 +25,8 @@ namespace SqlRepositories
                         images = item.Images,
                         text = item.Text,
                         item.date
-                    }
+                    },
+                    commandType: CommandType.StoredProcedure
                 );
 
             if (query != 1)

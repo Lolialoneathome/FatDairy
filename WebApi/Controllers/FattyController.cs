@@ -1,5 +1,6 @@
 ﻿using FatDairy.Domain.Models;
 using FatDairy.Domain.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,17 +10,25 @@ using WebApi.DTOs;
 
 namespace WebApi.Controllers
 {
+    [Route("api/[controller]")]
     public class FattyController : Controller
     {
         protected readonly FattyService _fattyService;
+        public FattyController(FattyService fattyService)
+        {
+            _fattyService = fattyService ?? throw new ArgumentNullException(nameof(fattyService));
+        }
+
         [HttpPost]
         public async Task<IActionResult> RegisterFattyAsync([FromBody] NewFattyDTO dto)
         {
             try
             {
+                if (dto == null)
+                    return BadRequest();
                 var dtoErrors = ValidateNewFattyDTO(dto);
                 if (dtoErrors.Count > 0)
-                    return StatusCode(StatusCodes.Status422UnprocessableEntity);
+                    return StatusCode(StatusCodes.Status422UnprocessableEntity, dtoErrors);
 
                 var userInfo = new UserInfo(dto.name, dto.surname, dto.password, dto.email, dto.birthday, (Sex)dto.sex);
                 var newFatty = await _fattyService.AddFattyAsync
@@ -46,6 +55,22 @@ namespace WebApi.Controllers
                 result.Add("Email not set");
 
             return result;
+        }
+
+        [Authorize]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetFattyAsync(int id) {
+            try
+            {
+                var fatty = Request.HttpContext.Items["CurrentUser"];
+
+                return Ok(fatty);
+            }
+            catch (Exception err)
+            {
+
+            }
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 }

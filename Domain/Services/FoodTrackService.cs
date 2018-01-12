@@ -1,6 +1,7 @@
 ﻿using FatDairy.Domain.Models;
 using FatDairy.Domain.Repos;
 using System;
+using System.Threading.Tasks;
 
 namespace FatDairy.Domain.Services
 {
@@ -8,17 +9,18 @@ namespace FatDairy.Domain.Services
     {
         protected readonly IFoodTrackItemRepository _repository;
 
-        public void Add(Fatty fatty, FoodTrackItem item)
+        public FoodTrackService(IFoodTrackItemRepository repository)
         {
-            if (fatty == null)
-                throw new ArgumentNullException(nameof(fatty));
-
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        }
+        public async Task Add(int fattyId, FoodTrackItem item)
+        {
             if (item == null)
                 throw new ArgumentNullException(nameof(item));
-            if (fatty.Id == 0)
+            if (fattyId == 0)
                 throw new Exception("Somethink wrong, ask Katya why");
 
-            _repository.AddAsync(fatty.Id, item);
+            await _repository.AddAsync(fattyId, item);
         }
     }
 }

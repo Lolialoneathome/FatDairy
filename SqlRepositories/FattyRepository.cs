@@ -57,6 +57,7 @@ namespace SqlRepositories
             if (dto == null) return null;
             var userInfo = new UserInfo(dto.name, dto.surname, dto.password, dto.email, dto.birthday, (Sex)dto.sex);
             var fatty = new Fatty(userInfo, dto.hidefoodtrach, dto.hideage, dto.hideemail, dto.currentweight, dto.desiredweight, dto.heigth, null);
+            fatty.Id = dto.id;
             return fatty;
         }
 
@@ -75,6 +76,7 @@ namespace SqlRepositories
             if (dto == null) return null;
             var userInfo = new UserInfo(dto.name, dto.surname, dto.password, dto.email, dto.birthday, (Sex)dto.sex);
             var fatty = new Fatty(userInfo, dto.hidefoodtrach, dto.hideage, dto.hideemail, dto.currentweight, dto.desiredweight, dto.heigth, null);
+            fatty.Id = dto.id;
             return fatty;
         }
 

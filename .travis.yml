@@ -3,5 +3,5 @@ mono: none
 dotnet: 2.0.0
 script:
  - dotnet restore
- - dotnet publish /WebApi/WebApi.csproj -c Release
+ - dotnet publish WebApi/WebApi.csproj -c Release
  - dotnet publish/WebApi.dll

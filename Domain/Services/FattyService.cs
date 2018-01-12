@@ -13,6 +13,7 @@ namespace FatDairy.Domain.Services
         {
             _fattyRepository = fattyRepository ?? throw new ArgumentNullException(nameof(fattyRepository));
         }
+
         public async Task<Fatty> AddFattyAsync(UserInfo userInfo,
             bool hideFoodTrack,
             bool hideAge,

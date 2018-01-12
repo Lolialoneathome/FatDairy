@@ -2,6 +2,7 @@
 using FatDairy.Domain.Repos;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -21,6 +22,13 @@ namespace WebApi.Controllers
     {
         protected readonly IFattyRepository _fattyRepo;
         protected readonly IHttpContextAccessor _httpContextAccessor;
+        public AuthController(IFattyRepository fattyRepo, IHttpContextAccessor httpContextAccessor)
+        {
+            _fattyRepo = fattyRepo ?? throw new ArgumentNullException(nameof(fattyRepo));
+            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+        }
+
+
         [HttpPost("token")]
         public async Task<IActionResult> GetToken([FromBody] AuthUserDTO dto)
         {
@@ -56,12 +64,12 @@ namespace WebApi.Controllers
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, person.UserInfo.Email),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, "Fatty")
+                    new Claim(ClaimsIdentity.DefaultRoleClaimType, "Fatty"),
+                    new Claim("UserId", person.Id.ToString())
                 };
                 ClaimsIdentity claimsIdentity =
                 new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
                     ClaimsIdentity.DefaultRoleClaimType);
-                _httpContextAccessor.HttpContext.Items.Add("CurrentUser", person);
                 return claimsIdentity;
             }
             return null;

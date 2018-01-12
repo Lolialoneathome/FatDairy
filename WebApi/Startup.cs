@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using WebApi.Auth;
 using SqlRepositories.IoC;
 using FatDairy.Domain.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApi
 {
@@ -50,8 +51,18 @@ namespace WebApi
                             ValidateIssuerSigningKey = true,
                         };
                     });
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IAppUser, AppUser>(p => {
+                var user = p.GetService<IHttpContextAccessor>().HttpContext.User;
+                int userId;
+                int.TryParse(user.FindFirst("UserId")?.Value, out userId);
+
+                return new AppUser() { Id = userId };
+            });
             services.AddSqlRepositories(Configuration.GetConnectionString("Postgresql"));
             services.AddScoped<FattyService>();
+            services.AddScoped<FoodTrackService>();
             services.AddMvc();
         }
 

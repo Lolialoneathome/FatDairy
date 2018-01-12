@@ -18,7 +18,7 @@ namespace SqlRepositories
         public async Task AddAsync(int fattyId, FoodTrackItem item)
         {
             var spName = "public.add_food_track_item";
-            var query = await _connection.ExecuteAsync(
+            await _connection.ExecuteAsync(
                     spName,
                     new {
                         fatty_id = fattyId,
@@ -28,9 +28,6 @@ namespace SqlRepositories
                     },
                     commandType: CommandType.StoredProcedure
                 );
-
-            if (query != 1)
-                throw new Exception("Sql error");
         }
 
         public IEnumerable<FoodTrackItem> Get(int fattyId, DateTime startDate, DateTime endDate)

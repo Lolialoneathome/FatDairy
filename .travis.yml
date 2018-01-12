@@ -4,4 +4,4 @@ dotnet: 2.0.0
 script:
  - dotnet restore
  - dotnet publish WebApi/WebApi.csproj -c Release
- - dotnet publish/WebApi.dll
+ - dotnet /home/travis/build/Lolialoneathome/FatDairy/WebApi/bin/Release/netcoreapp2.0/publish/WebApi.dll

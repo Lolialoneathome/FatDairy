@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import * as authActions from './actions/authActions.js'
 import './App.css';
 
 class App extends Component {
@@ -16,6 +17,11 @@ class App extends Component {
       </div>
     );
   }
+
+  async componentDidMount() {
+    const x = await authActions.GetCurrentUser();
+    //this.setState({ x });
+  }  
 }
 
 export default App;

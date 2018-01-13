@@ -8,7 +8,7 @@
 }
 
 .App-header {
-  background-color: rgb(238, 206, 247);
+  background-color: rgb(243, 219, 250);
   height: 50px;
   /* padding: 20px; */
   /* color: white; */
@@ -21,8 +21,8 @@
 .App-intro {
   font-size: large;
 }
-
+/* 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
-}
+} */

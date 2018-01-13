@@ -1,6 +1,7 @@
 ﻿using FatDairy.Domain.Models;
 using FatDairy.Domain.Repos;
 using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,11 +22,11 @@ namespace WebApi.Controllers
     public class AuthController : Controller
     {
         protected readonly IFattyRepository _fattyRepo;
-        protected readonly IHttpContextAccessor _httpContextAccessor;
-        public AuthController(IFattyRepository fattyRepo, IHttpContextAccessor httpContextAccessor)
+        protected readonly IAppUser _appUser;
+        public AuthController(IFattyRepository fattyRepo, IAppUser appUser)
         {
             _fattyRepo = fattyRepo ?? throw new ArgumentNullException(nameof(fattyRepo));
-            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+            _appUser = appUser;
         }
 
 
@@ -73,6 +74,23 @@ namespace WebApi.Controllers
                 return claimsIdentity;
             }
             return null;
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult GetCurrentUser()
+        {
+            try
+            {
+                if (_appUser == null)
+                    return Unauthorized();
+                return Ok(_appUser);
+            }
+            catch (Exception err)
+            {
+
+            }
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 }

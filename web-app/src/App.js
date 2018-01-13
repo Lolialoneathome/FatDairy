@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import './App.css';
 
 class App extends Component {
+  state = {isAuth: false}
   render() {
     return (
       <div className="App">
@@ -13,7 +14,10 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
         </header>
         <div class="container" id="container">
-
+          { //Check auth
+          (!this.state.isAuth)
+          ? <LoginForm />
+          : console.log("Eee, authenticated!") }
         </div>
       </div>
     );
@@ -22,19 +26,11 @@ class App extends Component {
   async componentDidMount() {
     const currentUser = await authActions.GetCurrentUser();
     if (currentUser == null){
-      this.showLoginPage()
+      this.setState({isAuth: false})
     }
     else {
-      this.showMainProfilePage()
+      this.setState({isAuth: true})
     }
-  }
-
-  showLoginPage() {
-    ReactDOM.render(<LoginForm />, document.getElementById("container"))
-  }
-
-  showMainProfilePage() {
-
   }
 }
 

@@ -63,8 +63,8 @@ namespace WebApi
             services.AddSqlRepositories(Configuration.GetConnectionString("Postgresql"));
             services.AddScoped<FattyService>();
             services.AddScoped<FoodTrackService>();
-            services.AddMvc();
             services.AddCors();
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,11 +75,10 @@ namespace WebApi
                 app.UseDeveloperExceptionPage();
             }
             app.UseAuthentication();
-            app.UseMvcWithDefaultRoute();
             app.UseCors(builder =>
-            builder.WithOrigins("http://localhost:3000")
-                   .AllowAnyHeader()
+                builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()
             );
+            app.UseMvcWithDefaultRoute();
         }
     }
 }

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import * as authActions from './actions/authActions.js'
+import LoginForm from './components/LoginForm'
+import ReactDOM from 'react-dom';
 import './App.css';
 
 class App extends Component {
@@ -9,19 +11,32 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Food Tracker</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div class="container" id="container">
+
+        </div>
       </div>
     );
   }
 
   async componentDidMount() {
-    const x = await authActions.GetCurrentUser();
+    const currentUser = await authActions.GetCurrentUser();
+    if (currentUser == null){
+      this.showLoginPage()
+    }
+    else {
+      showMainProfilePage()
+    }
     //this.setState({ x });
-  }  
+  }
+
+  showLoginPage() {
+    ReactDOM.render(<LoginForm />, document.getElementById("container"))
+  }
+
+  showMainProfilePage() {
+
+  }
 }
 
 export default App;

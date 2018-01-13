@@ -1,0 +1,32 @@
+.login-form-container {
+  width: 300px;
+}
+
+.login-form-container > h3 {
+  text-align: center;
+}
+
+.text-inputs input  {
+  display: block;
+  padding: 5px;
+  margin: auto;
+  margin-top: 10px;
+  width: 80%;
+}
+
+.sign-container {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sign-container label {
+  width: 50%;
+  display: inline-block;
+}
+
+.sign-container > button {
+  width: 95px;
+  height: 2em;
+}

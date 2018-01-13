@@ -24,6 +24,10 @@ class LoginForm extends Component {
       </div>
     );
   }
+
+  sendAuthRequest() {
+    
+  }
 }
 
 export default LoginForm;

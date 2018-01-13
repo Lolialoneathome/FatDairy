@@ -1,5 +1,6 @@
 .login-form-container {
   width: 300px;
+  margin: auto;
 }
 
 .login-form-container > h3 {

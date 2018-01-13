@@ -25,9 +25,8 @@ class App extends Component {
       this.showLoginPage()
     }
     else {
-      showMainProfilePage()
+      this.showMainProfilePage()
     }
-    //this.setState({ x });
   }
 
   showLoginPage() {

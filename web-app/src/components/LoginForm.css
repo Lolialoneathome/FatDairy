@@ -1,33 +1,62 @@
 .login-form-container {
   width: 300px;
   margin: auto;
+  border: 2px solid #f2f3;
+  padding: 25px;
+  background-color: #F3DBFA;
 }
 
 .login-form-container > h3 {
   text-align: center;
+  margin-top: 0;
+}
+
+.text-inputs {
+  margin-bottom: 25px;
 }
 
 .text-inputs input  {
   display: block;
-  padding: 5px;
+  padding: 10px;
   margin: auto;
-  margin-top: 10px;
+  margin-top: 15px;
   width: 80%;
+  background-color: white;
+  outline: none;
+  box-shadow: none;
+  border: 1px solid hsl(300, 70%, 50%);
+
+}
+
+.text-inputs input:focus{
+  border: 1px solid #8FDBFB;
 }
 
 .sign-container {
-  padding: 5px;
+  padding: 0;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
+  margin-top: 10px;
 }
 
 .sign-container label {
   width: 50%;
   display: inline-block;
+  font-size: 0.9em;
+  position: relative;
+  left: 20px;
 }
 
 .sign-container > button {
   width: 95px;
-  height: 2em;
+  height: 3em;
+  background-color: #61DAFB;
+  color: black;
+  position: relative;
+  right: -10px;
+  margin: auto;
+  text-decoration: none;
+  border: none;
+  border-radius: 4px;
 }
